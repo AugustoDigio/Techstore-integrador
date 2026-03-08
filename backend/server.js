@@ -37,7 +37,7 @@ app.use('/api/carrito', carritoRouter);
 
 
 app.get('/', (req, res) => {
-  res.json({ message: 'API funcionando correctamente 🚀' });
+  res.render('home', { title: 'Inicio' });
 });
 
 
