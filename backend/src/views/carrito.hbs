@@ -62,6 +62,10 @@
               <i class="bi bi-lock-fill me-2"></i>Confirmar pedido
             </button>
 
+            <button class="btn-checkout mt-2" id="btnMP" onclick="pagarConMP()" style="background: linear-gradient(135deg, #00b1ea, #009ee3);">
+            <i class="bi bi-credit-card me-2"></i>Pagar con Mercado Pago
+            </button>
+
             <div class="text-center mt-3">
               <small style="color: var(--ts-muted); font-size: 0.78rem;">
                 <i class="bi bi-shield-check me-1 text-success"></i>
@@ -186,5 +190,31 @@ function mostrarToast(msg, tipo = 'success') {
   toast.innerHTML = `<i class="bi bi-${tipo === 'error' ? 'x-circle text-danger' : 'check-circle text-success'}"></i><span>${msg}</span>`;
   container.appendChild(toast);
   setTimeout(() => toast.remove(), 4000);
+}
+
+async function pagarConMP() {
+  const carrito = JSON.parse(localStorage.getItem('carrito') || '[]');
+  if (carrito.length === 0) return;
+
+  const total = carrito.reduce((acc, item) => acc + item.precio * item.cantidad, 0);
+
+  
+  const resPedido = await fetch('/api/carrito', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ items: carrito, total })
+  });
+  const pedido = await resPedido.json();
+
+  
+  const resPref = await fetch('/api/carrito/crear-preferencia', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ items: carrito, carritoId: pedido.pedido._id })
+  });
+  const pref = await resPref.json();
+
+  
+  window.location.href = pref.init_point;
 }
 </script>
