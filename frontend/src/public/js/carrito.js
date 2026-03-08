@@ -1,8 +1,4 @@
-// ======================================
-// TECHSTORE — Carrito Global
-// ======================================
 
-// Actualizar badge del navbar al cargar cualquier página
 document.addEventListener('DOMContentLoaded', () => {
   actualizarBadge();
 });

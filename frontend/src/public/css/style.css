@@ -1,7 +1,4 @@
-/* ========================================
-   TECHSTORE — CSS Principal
-   Tema: Dark Tech / Futurista
-======================================== */
+
 
 :root {
   --ts-bg: #0a0a0f;
@@ -16,7 +13,7 @@
   --ts-danger: #ef4444;
 }
 
-/* BASE */
+
 *, *::before, *::after { box-sizing: border-box; }
 
 body {
@@ -31,7 +28,7 @@ body {
 
 main { flex: 1; }
 
-/* TIPOGRAFÍA */
+
 h1, h2, h3, h4, h5, h6,
 .navbar-brand, .brand-text {
   font-family: 'Rajdhani', sans-serif;
@@ -39,9 +36,7 @@ h1, h2, h3, h4, h5, h6,
   letter-spacing: 0.04em;
 }
 
-/* ========================================
-   NAVBAR
-======================================== */
+
 #mainNav {
   background: rgba(10, 10, 15, 0.92);
   backdrop-filter: blur(12px);
@@ -135,9 +130,7 @@ h1, h2, h3, h4, h5, h6,
   font-family: 'Inter', sans-serif;
 }
 
-/* ========================================
-   HERO (HOME)
-======================================== */
+
 .hero-section {
   min-height: 88vh;
   display: flex;
@@ -226,7 +219,7 @@ h1, h2, h3, h4, h5, h6,
   filter: drop-shadow(0 20px 60px rgba(0,212,255,0.2));
 }
 
-/* Estadísticas hero */
+
 .hero-stats {
   display: flex;
   gap: 2rem;
@@ -250,7 +243,7 @@ h1, h2, h3, h4, h5, h6,
   letter-spacing: 0.08em;
 }
 
-/* Features strip */
+
 .features-strip {
   background: var(--ts-surface);
   border-top: 1px solid var(--ts-border);
@@ -274,9 +267,7 @@ h1, h2, h3, h4, h5, h6,
   font-size: 1.2rem;
 }
 
-/* ========================================
-   SECCIÓN PRODUCTOS DESTACADOS (HOME)
-======================================== */
+
 .section-title {
   font-size: clamp(1.8rem, 3vw, 2.5rem);
   color: var(--ts-text);
@@ -300,9 +291,7 @@ h1, h2, h3, h4, h5, h6,
   font-size: 0.95rem;
 }
 
-/* ========================================
-   CARDS DE PRODUCTOS
-======================================== */
+
 .product-card {
   background: var(--ts-surface);
   border: 1px solid var(--ts-border);
@@ -424,9 +413,6 @@ h1, h2, h3, h4, h5, h6,
   box-shadow: 0 4px 16px rgba(0,212,255,0.3);
 }
 
-/* ========================================
-   PÁGINA DE PRODUCTOS
-======================================== */
 .page-header {
   background: var(--ts-surface);
   border-bottom: 1px solid var(--ts-border);
@@ -491,9 +477,7 @@ h1, h2, h3, h4, h5, h6,
 
 .search-bar::placeholder { color: var(--ts-muted); }
 
-/* ========================================
-   CARRITO
-======================================== */
+
 .cart-item {
   background: var(--ts-surface);
   border: 1px solid var(--ts-border);
@@ -654,9 +638,7 @@ h1, h2, h3, h4, h5, h6,
 
 .cart-empty i { font-size: 4rem; opacity: 0.3; display: block; margin-bottom: 1rem; }
 
-/* ========================================
-   LOGIN / REGISTRO
-======================================== */
+
 .auth-section {
   min-height: 90vh;
   display: flex;
@@ -762,9 +744,7 @@ h1, h2, h3, h4, h5, h6,
 .auth-divider::before { left: 0; }
 .auth-divider::after { right: 0; }
 
-/* ========================================
-   FOOTER
-======================================== */
+
 .footer {
   background: var(--ts-surface);
   border-top: 1px solid var(--ts-border);
@@ -821,9 +801,7 @@ h1, h2, h3, h4, h5, h6,
 
 .footer-divider { border-color: var(--ts-border); margin: 0; }
 
-/* ========================================
-   TOAST / NOTIFICACIONES
-======================================== */
+
 .toast-container {
   position: fixed;
   bottom: 1.5rem;
@@ -852,9 +830,7 @@ h1, h2, h3, h4, h5, h6,
 
 .ts-toast i { color: var(--ts-accent); font-size: 1.1rem; }
 
-/* ========================================
-   UTILIDADES
-======================================== */
+
 .text-accent { color: var(--ts-accent) !important; }
 .bg-surface { background: var(--ts-surface) !important; }
 .border-custom { border-color: var(--ts-border) !important; }
@@ -862,14 +838,11 @@ h1, h2, h3, h4, h5, h6,
 .section-pad { padding: 5rem 0; }
 .section-pad-sm { padding: 3rem 0; }
 
-/* Scrollbar */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--ts-bg); }
 ::-webkit-scrollbar-thumb { background: rgba(0,212,255,0.3); border-radius: 3px; }
 
-/* ========================================
-   RESPONSIVE
-======================================== */
+
 @media (max-width: 768px) {
   .hero-section { min-height: auto; padding: 4rem 0; }
   .hero-img { max-width: 280px; }

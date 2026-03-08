@@ -1,6 +1,6 @@
 const Carrito = require('../models/Carrito');
 
-// POST /api/carrito — Recibir y guardar el pedido del frontend
+
 const recibirCarrito = async (req, res) => {
   try {
     const { items, total, cliente } = req.body;
@@ -10,7 +10,7 @@ const recibirCarrito = async (req, res) => {
       return res.status(400).json({ error: 'El carrito está vacío o tiene un formato incorrecto' });
     }
 
-    // Mostrar en consola del servidor (requisito del proyecto)
+  
     console.log('\n====================================');
     console.log('🛒 NUEVO PEDIDO RECIBIDO:');
     console.log('====================================');
@@ -19,7 +19,7 @@ const recibirCarrito = async (req, res) => {
     if (cliente) console.log('Cliente:', cliente);
     console.log('====================================\n');
 
-    // Guardar el pedido en la base de datos
+    
     const nuevoPedido = new Carrito({ items, total, cliente });
     const pedidoGuardado = await nuevoPedido.save();
 
@@ -32,7 +32,7 @@ const recibirCarrito = async (req, res) => {
   }
 };
 
-// GET /api/carrito — Obtener todos los pedidos (útil para admin)
+
 const getPedidos = async (req, res) => {
   try {
     const pedidos = await Carrito.find().sort({ createdAt: -1 });
@@ -42,9 +42,7 @@ const getPedidos = async (req, res) => {
   }
 };
 
-// ==========================================
-// MERCADO PAGO — Crear preferencia de pago
-// ==========================================
+
 const crearPreferencia = async (req, res) => {
   try {
     const { MercadoPagoConfig, Preference } = require('mercadopago');
@@ -55,7 +53,7 @@ const crearPreferencia = async (req, res) => {
 
     const { items, carritoId } = req.body;
 
-    // Formatear items para Mercado Pago
+  
     const mpItems = items.map((item) => ({
       id: item.productoId || item._id || String(Math.random()),
       title: item.nombre,
@@ -78,14 +76,14 @@ const crearPreferencia = async (req, res) => {
     const preference = new Preference(client);
     const result = await preference.create({ body: preferenceData });
 
-    // Si hay carritoId, actualizamos el pedido con el preferenceId
+   
     if (carritoId) {
       await Carrito.findByIdAndUpdate(carritoId, { mpPreferenceId: result.id });
     }
 
     res.status(200).json({
       id: result.id,
-      init_point: result.init_point, // URL para redirigir al usuario
+      init_point: result.init_point, 
     });
   } catch (error) {
     res.status(500).json({ error: 'Error al crear preferencia de Mercado Pago', detalle: error.message });

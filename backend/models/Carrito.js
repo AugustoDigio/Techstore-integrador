@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-// Sub-esquema para cada ítem dentro del carrito
+
 const itemCarritoSchema = new mongoose.Schema(
   {
     productoId: {
@@ -44,12 +44,12 @@ const carritoSchema = new mongoose.Schema(
       enum: ['pendiente', 'pagado', 'cancelado'],
       default: 'pendiente',
     },
-    // Datos opcionales del cliente
+   
     cliente: {
       nombre: { type: String, default: '' },
       email: { type: String, default: '' },
     },
-    // ID de preferencia de Mercado Pago (opcional)
+  
     mpPreferenceId: {
       type: String,
       default: null,

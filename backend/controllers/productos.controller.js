@@ -1,6 +1,5 @@
 const Producto = require('../models/Producto');
 
-// GET /api/productos — Obtener todos los productos
 const getProductos = async (req, res) => {
   try {
     const productos = await Producto.find({ disponible: true });
@@ -10,7 +9,6 @@ const getProductos = async (req, res) => {
   }
 };
 
-// GET /api/productos/:id — Obtener un producto por ID
 const getProductoById = async (req, res) => {
   try {
     const producto = await Producto.findById(req.params.id);
@@ -23,7 +21,7 @@ const getProductoById = async (req, res) => {
   }
 };
 
-// POST /api/productos — Crear un nuevo producto
+
 const createProducto = async (req, res) => {
   try {
     const nuevoProducto = new Producto(req.body);
@@ -34,7 +32,7 @@ const createProducto = async (req, res) => {
   }
 };
 
-// PUT /api/productos/:id — Actualizar un producto
+
 const updateProducto = async (req, res) => {
   try {
     const productoActualizado = await Producto.findByIdAndUpdate(
@@ -51,7 +49,7 @@ const updateProducto = async (req, res) => {
   }
 };
 
-// DELETE /api/productos/:id — Eliminar un producto
+
 const deleteProducto = async (req, res) => {
   try {
     const productoEliminado = await Producto.findByIdAndDelete(req.params.id);

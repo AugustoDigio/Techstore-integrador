@@ -5,7 +5,7 @@ const morgan = require('morgan');
 
 const app = express();
 
-// Configuración de Handlebars
+
 app.engine('hbs', engine({
   extname: '.hbs',
   defaultLayout: 'main',
@@ -21,9 +21,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// ==============================
-// RUTAS
-// ==============================
+
 
 app.get('/', (req, res) => {
   res.render('home', { title: 'Inicio' });
@@ -49,19 +47,19 @@ app.get('/success', (req, res) => {
   res.render('success', { title: 'Pedido confirmado' });
 });
 
-// POST login (placeholder)
+
 app.post('/login', (req, res) => {
   const { email, password } = req.body;
   console.log('Login intento:', email);
-  // Acá iría la lógica de autenticación
+  
   res.redirect('/');
 });
 
-// POST registro (placeholder)
+
 app.post('/registro', (req, res) => {
   const { nombre, apellido, email, password } = req.body;
   console.log('Nuevo registro:', nombre, apellido, email);
-  // Acá iría la lógica de registro
+ 
   res.redirect('/login');
 });
 

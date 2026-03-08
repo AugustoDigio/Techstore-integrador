@@ -1,4 +1,4 @@
-<!-- HERO -->
+
 <section class="hero-section">
   <div class="container">
     <div class="row align-items-center gy-5">
@@ -110,7 +110,6 @@
   </div>
 </section>
 
-<!-- CTA BANNER -->
 <section class="section-pad-sm" style="background: var(--ts-surface); border-top: 1px solid var(--ts-border); border-bottom: 1px solid var(--ts-border);">
   <div class="container text-center">
     <h2 class="section-title mx-auto" style="display:block;">¿Buscás algo específico?</h2>
@@ -122,7 +121,6 @@
 </section>
 
 <script>
-// Cargar productos destacados desde el backend
 document.addEventListener('DOMContentLoaded', async () => {
   try {
     const res = await fetch('http://localhost:3000/api/productos');
@@ -136,7 +134,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     loading.remove();
-    // Mostrar máximo 4 destacados
+    
     productos.slice(0, 4).forEach(p => {
       container.innerHTML += `
         <div class="col-sm-6 col-lg-3">

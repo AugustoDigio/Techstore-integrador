@@ -24,10 +24,10 @@
       </a>
     </div>
 
-    <!-- CARRITO CON ITEMS -->
+  
     <div id="carritoConItems">
       <div class="row g-4">
-        <!-- Lista de items -->
+        
         <div class="col-lg-8">
           <div id="listaItems"></div>
           <div class="d-flex justify-content-between mt-3">
@@ -41,7 +41,7 @@
           </div>
         </div>
 
-        <!-- Resumen del pedido -->
+        
         <div class="col-lg-4">
           <div class="order-summary">
             <div class="summary-title">Resumen del pedido</div>
@@ -76,7 +76,6 @@
   </div>
 </section>
 
-<!-- Toast container -->
 <div class="toast-container" id="toastContainer"></div>
 
 <script>
@@ -165,7 +164,6 @@ async function enviarPedido() {
     });
 
     if (res.ok) {
-      // Vaciar carrito en frontend
       localStorage.removeItem('carrito');
       actualizarBadge();
       mostrarToast('✅ ¡Pedido confirmado! Gracias por tu compra.');
