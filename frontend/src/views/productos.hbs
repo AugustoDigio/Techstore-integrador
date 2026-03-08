@@ -1,0 +1,199 @@
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="container">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-2" style="font-size:0.85rem; opacity:0.6;">
+        <li class="breadcrumb-item"><a href="/" class="text-decoration-none" style="color:inherit;">Inicio</a></li>
+        <li class="breadcrumb-item active">Productos</li>
+      </ol>
+    </nav>
+    <h1 class="section-title mb-1">Catálogo</h1>
+    <p class="section-subtitle">Encontrá el producto que estás buscando</p>
+  </div>
+</div>
+
+<section class="section-pad-sm">
+  <div class="container">
+    <div class="row g-4">
+
+      <!-- SIDEBAR FILTROS -->
+      <div class="col-lg-3">
+        <div class="filter-sidebar">
+
+          <div class="mb-4">
+            <div class="filter-title">Buscar</div>
+            <input
+              type="text"
+              class="search-bar"
+              id="searchInput"
+              placeholder="Buscar producto..."
+            />
+          </div>
+
+          <div class="mb-4">
+            <div class="filter-title">Categoría</div>
+            <div class="d-flex flex-column gap-2">
+              <div class="form-check filter-check">
+                <input class="form-check-input" type="checkbox" value="Celulares" id="cat1">
+                <label class="form-check-label" for="cat1">Celulares</label>
+              </div>
+              <div class="form-check filter-check">
+                <input class="form-check-input" type="checkbox" value="Laptops" id="cat2">
+                <label class="form-check-label" for="cat2">Laptops</label>
+              </div>
+              <div class="form-check filter-check">
+                <input class="form-check-input" type="checkbox" value="Accesorios" id="cat3">
+                <label class="form-check-label" for="cat3">Accesorios</label>
+              </div>
+              <div class="form-check filter-check">
+                <input class="form-check-input" type="checkbox" value="Audio" id="cat4">
+                <label class="form-check-label" for="cat4">Audio</label>
+              </div>
+              <div class="form-check filter-check">
+                <input class="form-check-input" type="checkbox" value="Tablets" id="cat5">
+                <label class="form-check-label" for="cat5">Tablets</label>
+              </div>
+              <div class="form-check filter-check">
+                <input class="form-check-input" type="checkbox" value="General" id="cat6">
+                <label class="form-check-label" for="cat6">General</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <div class="filter-title">Precio máximo</div>
+            <input type="range" class="form-range" id="precioRange" min="0" max="500000" step="5000" value="500000"
+              style="accent-color: var(--ts-accent);">
+            <div class="d-flex justify-content-between" style="font-size:0.8rem; color: var(--ts-muted);">
+              <span>$0</span>
+              <span id="precioMax">$500.000</span>
+            </div>
+          </div>
+
+          <button class="btn btn-outline-light btn-sm w-100" id="btnLimpiar">
+            <i class="bi bi-x-circle me-1"></i>Limpiar filtros
+          </button>
+        </div>
+      </div>
+
+      <!-- GRID PRODUCTOS -->
+      <div class="col-lg-9">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <span id="countProductos" style="color: var(--ts-muted); font-size: 0.9rem;"></span>
+          <select class="form-select form-select-sm w-auto" id="ordenSelect"
+            style="background: var(--ts-surface-2); border-color: var(--ts-border); color: var(--ts-text);">
+            <option value="default">Ordenar por</option>
+            <option value="precio-asc">Precio: menor a mayor</option>
+            <option value="precio-desc">Precio: mayor a menor</option>
+            <option value="nombre">Nombre A-Z</option>
+          </select>
+        </div>
+
+        <div class="row g-4" id="productosGrid">
+          <div class="col-12 text-center py-5" id="loadingGrid">
+            <div class="spinner-border" style="color: var(--ts-accent); width:2rem; height:2rem;"></div>
+            <p class="text-muted mt-3">Cargando productos...</p>
+          </div>
+        </div>
+
+        <div id="sinResultados" class="text-center py-5 d-none">
+          <i class="bi bi-search" style="font-size:3rem; opacity:0.2; display:block; margin-bottom:1rem;"></i>
+          <p class="text-muted">No se encontraron productos con esos filtros.</p>
+          <button class="btn btn-outline-light btn-sm px-4" id="btnLimpiar2">Limpiar filtros</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script>
+let todosLosProductos = [];
+
+// Fetch inicial
+document.addEventListener('DOMContentLoaded', async () => {
+  try {
+    const res = await fetch('http://localhost:3000/api/productos');
+    todosLosProductos = await res.json();
+    renderProductos(todosLosProductos);
+  } catch (e) {
+    document.getElementById('loadingGrid').innerHTML =
+      '<p class="text-muted">Error al conectar con el servidor.</p>';
+  }
+
+  // Listeners de filtros
+  document.getElementById('searchInput').addEventListener('input', aplicarFiltros);
+  document.getElementById('precioRange').addEventListener('input', (e) => {
+    document.getElementById('precioMax').textContent = '$' + Number(e.target.value).toLocaleString('es-AR');
+    aplicarFiltros();
+  });
+  document.querySelectorAll('.form-check-input').forEach(cb => cb.addEventListener('change', aplicarFiltros));
+  document.getElementById('ordenSelect').addEventListener('change', aplicarFiltros);
+  document.getElementById('btnLimpiar').addEventListener('click', limpiarFiltros);
+  document.getElementById('btnLimpiar2')?.addEventListener('click', limpiarFiltros);
+});
+
+function aplicarFiltros() {
+  const busqueda = document.getElementById('searchInput').value.toLowerCase();
+  const precioMax = Number(document.getElementById('precioRange').value);
+  const categoriasSeleccionadas = [...document.querySelectorAll('.form-check-input:checked')].map(c => c.value);
+  const orden = document.getElementById('ordenSelect').value;
+
+  let filtrados = todosLosProductos.filter(p => {
+    const matchBusqueda = p.nombre.toLowerCase().includes(busqueda) || (p.descripcion || '').toLowerCase().includes(busqueda);
+    const matchPrecio = p.precio <= precioMax;
+    const matchCategoria = categoriasSeleccionadas.length === 0 || categoriasSeleccionadas.includes(p.categoria);
+    return matchBusqueda && matchPrecio && matchCategoria;
+  });
+
+  if (orden === 'precio-asc') filtrados.sort((a, b) => a.precio - b.precio);
+  else if (orden === 'precio-desc') filtrados.sort((a, b) => b.precio - a.precio);
+  else if (orden === 'nombre') filtrados.sort((a, b) => a.nombre.localeCompare(b.nombre));
+
+  renderProductos(filtrados);
+}
+
+function limpiarFiltros() {
+  document.getElementById('searchInput').value = '';
+  document.getElementById('precioRange').value = 500000;
+  document.getElementById('precioMax').textContent = '$500.000';
+  document.querySelectorAll('.form-check-input').forEach(cb => cb.checked = false);
+  document.getElementById('ordenSelect').value = 'default';
+  renderProductos(todosLosProductos);
+}
+
+function renderProductos(lista) {
+  const grid = document.getElementById('productosGrid');
+  const sinResultados = document.getElementById('sinResultados');
+  const loadingGrid = document.getElementById('loadingGrid');
+  if (loadingGrid) loadingGrid.remove();
+
+  document.getElementById('countProductos').textContent = `${lista.length} producto${lista.length !== 1 ? 's' : ''} encontrado${lista.length !== 1 ? 's' : ''}`;
+
+  if (lista.length === 0) {
+    grid.innerHTML = '';
+    sinResultados.classList.remove('d-none');
+    return;
+  }
+
+  sinResultados.classList.add('d-none');
+  grid.innerHTML = lista.map(p => `
+    <div class="col-sm-6 col-xl-4">
+      <div class="product-card">
+        <div class="product-img-wrap">
+          <img src="${p.imagen || 'https://via.placeholder.com/300x200?text=Sin+imagen'}" alt="${p.nombre}" />
+        </div>
+        <div class="product-body">
+          <div class="product-category">${p.categoria || 'General'}</div>
+          <div class="product-name">${p.nombre}</div>
+          <div class="product-desc">${p.descripcion || ''}</div>
+          <div class="product-price"><span class="currency">$</span>${p.precio.toLocaleString('es-AR')}</div>
+          <button class="btn-add-cart" onclick='agregarAlCarrito(${JSON.stringify(p)})'>
+            <i class="bi bi-bag-plus me-2"></i>Agregar al carrito
+          </button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+</script>
