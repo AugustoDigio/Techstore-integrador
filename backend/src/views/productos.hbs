@@ -62,14 +62,13 @@
 
           <div class="mb-4">
             <div class="filter-title">Precio máximo</div>
-            <input type="range" class="form-range" id="precioRange" min="0" max="500000" step="5000" value="500000"
+            <input type="range" class="form-range" id="precioRange" min="0" max="5000000" step="5000" value="5000000"
               style="accent-color: var(--ts-accent);">
             <div class="d-flex justify-content-between" style="font-size:0.8rem; color: var(--ts-muted);">
               <span>$0</span>
-              <span id="precioMax">$500.000</span>
+              <span id="precioMax">$5.000.000</span>
             </div>
           </div>
-
           <button class="btn btn-outline-light btn-sm w-100" id="btnLimpiar">
             <i class="bi bi-x-circle me-1"></i>Limpiar filtros
           </button>
@@ -155,8 +154,8 @@ function aplicarFiltros() {
 
 function limpiarFiltros() {
   document.getElementById('searchInput').value = '';
-  document.getElementById('precioRange').value = 500000;
-  document.getElementById('precioMax').textContent = '$500.000';
+  document.getElementById('precioRange').value = 5000000;
+  document.getElementById('precioMax').textContent = '$5.000.000';
   document.querySelectorAll('.form-check-input').forEach(cb => cb.checked = false);
   document.getElementById('ordenSelect').value = 'default';
   renderProductos(todosLosProductos);

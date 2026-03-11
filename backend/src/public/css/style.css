@@ -315,12 +315,17 @@ h1, h2, h3, h4, h5, h6,
   text-align: center;
   position: relative;
   overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .product-img-wrap img {
   height: 180px;
   object-fit: contain;
   transition: transform 0.3s ease;
+  margin: 0 auto;
+  display: block;
 }
 
 .product-card:hover .product-img-wrap img {
